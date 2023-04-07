@@ -1,0 +1,16 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://root:example@localhost:27017
+      database: formalizacao
+
+
+api:
+  client:
+    address:
+      url: http://localhost:9999/address
+
+
