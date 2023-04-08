@@ -1,10 +1,9 @@
-package com.br.exercicio.formalizacao.adapters.outbound.client.response;
+package com.br.exercicio.formalizacao.adapters.inbound.controller.response;
 
 import lombok.Data;
 
 @Data
 public class AddressResponse {
-
     private String zipCode;
     private String street;
     private String city;

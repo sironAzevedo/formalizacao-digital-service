@@ -5,7 +5,6 @@ public class Customer {
     private String nome;
     private String cpf;
     private Address address;
-
     private Boolean isValidCpf;
 
     public Customer() {
