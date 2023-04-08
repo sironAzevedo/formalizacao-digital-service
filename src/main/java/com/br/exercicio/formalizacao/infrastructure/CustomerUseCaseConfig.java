@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class CustomerConfig {
+public class CustomerUseCaseConfig {
 
     @Bean
     public CustomerUseCase customerUseCase(
