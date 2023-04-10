@@ -1,10 +1,11 @@
 package com.br.exercicio.formalizacao.adapters.inbound.controller.request;
 
+import lombok.Data;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 
-@Getter
+@Data
 public class CustomerRequest {
 
     @NotBlank

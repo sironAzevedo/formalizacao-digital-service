@@ -1,6 +1,6 @@
 package com.br.exercicio.formalizacao.adapters.inbound.controller;
 
-import com.br.exercicio.formalizacao.adapters.inbound.controller.mapper.CustomerMapper;
+import com.br.exercicio.formalizacao.adapters.inbound.controller.mapper.CustomerRequestResponseMapper;
 import com.br.exercicio.formalizacao.adapters.inbound.controller.request.CustomerRequest;
 import com.br.exercicio.formalizacao.adapters.inbound.controller.response.CustomerResponse;
 import com.br.exercicio.formalizacao.application.core.domain.Customer;
@@ -45,7 +45,7 @@ public class CustomerController {
     })
     public void inserir(@Valid @RequestBody CustomerRequest request) {
         log.info("INICIO - [inserir pessoas: {}]", request.getCpf());
-        Customer customer = CustomerMapper.INSTANCE.to(request);
+        Customer customer = CustomerRequestResponseMapper.INSTANCE.toCustomer(request);
         input.insert(customer, request.getZipCode());
         log.info("FIM - [inserir pessoas: {}]", request.getCpf());
     }
@@ -66,7 +66,7 @@ public class CustomerController {
         log.info("INICIO - [consultarPessoaPorId: {}]", codigo);
         Customer customer = input.find(codigo);;
         log.info("FIM - [consultarPessoaPorId: {}]", codigo);
-        return CustomerMapper.INSTANCE.toCustomerResponse(customer);
+        return CustomerRequestResponseMapper.INSTANCE.toCustomerResponse(customer);
     }
 
     @PutMapping("/{id}")
@@ -83,7 +83,7 @@ public class CustomerController {
     public void update(@PathVariable(name = "id") String codigo,
                        @Valid @RequestBody CustomerRequest request) {
         log.info("INICIO - [atualizar pessoas: {}]", request.getCpf());
-        Customer customer = CustomerMapper.INSTANCE.to(request);
+        Customer customer = CustomerRequestResponseMapper.INSTANCE.toCustomer(request);
         customer.setId(codigo);
         input.update(customer, request.getZipCode());
         log.info("FIM - [atualizar pessoas: {}]", request.getCpf());

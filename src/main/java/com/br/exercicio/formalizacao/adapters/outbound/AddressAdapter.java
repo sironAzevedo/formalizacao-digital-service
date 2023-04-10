@@ -1,4 +1,4 @@
-package com.br.exercicio.formalizacao.adapters;
+package com.br.exercicio.formalizacao.adapters.outbound;
 
 import com.br.exercicio.formalizacao.adapters.outbound.client.AddressClient;
 import com.br.exercicio.formalizacao.adapters.outbound.client.response.AddressClientResponse;
@@ -6,13 +6,15 @@ import com.br.exercicio.formalizacao.adapters.outbound.client.mapper.AddressMapp
 import com.br.exercicio.formalizacao.application.core.domain.Address;
 import com.br.exercicio.formalizacao.application.ports.outbound.AddressOutputPort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class AddressAdapter implements AddressOutputPort {
 
-    private final AddressClient addressClient;
+    @Autowired
+    private AddressClient addressClient;
 
     @Override
     public Address find(String zipCode) {

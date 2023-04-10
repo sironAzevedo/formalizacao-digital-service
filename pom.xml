@@ -17,8 +17,10 @@
 	<description>Aplicação para simular uma formalização digital</description>
 
 	<properties>
-		<java.version>11</java.version>
-		<org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
+		<java.version>17</java.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
 		<springdoc-openapi-ui.version>1.6.7</springdoc-openapi-ui.version>
 	</properties>
 

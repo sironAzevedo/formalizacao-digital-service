@@ -5,15 +5,20 @@ import com.br.exercicio.formalizacao.application.core.domain.Customer;
 import com.br.exercicio.formalizacao.application.ports.inbound.CustomerInputPort;
 import com.br.exercicio.formalizacao.application.ports.outbound.AddressOutputPort;
 import com.br.exercicio.formalizacao.application.ports.outbound.CustomerOutputPort;
+import com.br.exercicio.formalizacao.application.ports.outbound.SendCpfValidationOutputPort;
 
 public class CustomerUseCase implements CustomerInputPort {
-
     private final AddressOutputPort addressOutputPort;
     private final CustomerOutputPort customerOutputPort;
+    private final SendCpfValidationOutputPort sendCpfValidationOutputPort;
 
-    public CustomerUseCase(AddressOutputPort addressOutputPort, CustomerOutputPort customerOutputPort) {
+    public CustomerUseCase(
+            AddressOutputPort addressOutputPort,
+            CustomerOutputPort customerOutputPort,
+            SendCpfValidationOutputPort sendCpfValidationOutputPort) {
         this.addressOutputPort = addressOutputPort;
         this.customerOutputPort = customerOutputPort;
+        this.sendCpfValidationOutputPort = sendCpfValidationOutputPort;
     }
 
     @Override
@@ -21,6 +26,7 @@ public class CustomerUseCase implements CustomerInputPort {
         Address address = addressOutputPort.find(zipCode);
         customer.setAddress(address);
         customerOutputPort.insert(customer);
+        sendCpfValidationOutputPort.send(customer.getCpf());
     }
 
     @Override

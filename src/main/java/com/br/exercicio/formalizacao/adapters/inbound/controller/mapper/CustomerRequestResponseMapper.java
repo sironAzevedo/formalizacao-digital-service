@@ -8,12 +8,13 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
-public interface CustomerMapper {
-    CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class);
+public interface CustomerRequestResponseMapper {
+    CustomerRequestResponseMapper INSTANCE = Mappers.getMapper(CustomerRequestResponseMapper.class);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "address", ignore = true)
     @Mapping(target = "isValidCpf", ignore = true)
-    Customer to(CustomerRequest request);
+    Customer toCustomer(CustomerRequest request);
+
     CustomerResponse toCustomerResponse(Customer customer);
 }

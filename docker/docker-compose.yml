@@ -53,13 +53,13 @@ services:
     image: wiremock/wiremock:latest
     container_name: wiremock-formalizacao
     ports:
-      - "9999:8000"
+      - "9999:8080"
     volumes:
       - ./wiremock/__files/:/home/wiremock/__files/
       - ./wiremock/mappings/:/home/wiremock/mappings/
     command:
-      - -verbose
       - -global-response-templating
+      - --verbose
     networks:
       - formalizao-digital
 

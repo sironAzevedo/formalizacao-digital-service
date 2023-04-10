@@ -1,10 +1,11 @@
-package com.br.exercicio.formalizacao.adapters;
+package com.br.exercicio.formalizacao.adapters.outbound;
 
 import com.br.exercicio.formalizacao.adapters.outbound.repository.CustomerRepository;
 import com.br.exercicio.formalizacao.adapters.outbound.repository.mapper.CustomerMapper;
 import com.br.exercicio.formalizacao.application.core.domain.Customer;
 import com.br.exercicio.formalizacao.application.ports.outbound.CustomerOutputPort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -13,6 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CustomerAdapter implements CustomerOutputPort {
 
+   // @Autowired
     private final CustomerRepository customerRepository;
 
     @Override

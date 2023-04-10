@@ -1,0 +1,13 @@
+{
+  "request": {
+    "urlPathPattern": "/address/([a-zA-z0-9/-]*)",
+    "method": "GET"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName": "get-address-response.json"
+  }
+}
