@@ -6,12 +6,15 @@ import com.br.exercicio.formalizacao.domain.entity.AddressEntity;
 import com.br.exercicio.formalizacao.domain.entity.CustomerEntity;
 import com.br.exercicio.formalizacao.domain.mapper.AddressMapper;
 import com.br.exercicio.formalizacao.domain.mapper.CustomerMapper;
+import com.br.exercicio.formalizacao.events.listener.NotificacaoNovaFormalizacaoListener;
+import com.br.exercicio.formalizacao.events.listener.message.NotificationValidationDocumentMessage;
 import com.br.exercicio.formalizacao.events.producer.SendCpfValidationProducer;
 import com.br.exercicio.formalizacao.repository.AddressClientRepository;
 import com.br.exercicio.formalizacao.repository.CustomerRepository;
 import com.br.exercicio.formalizacao.service.ICustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -21,7 +24,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
     private final CustomerRepository customerRepository;
     private final AddressClientRepository addressClientRepository;
-    private final SendCpfValidationProducer cpfValidationProducer;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Override
     public void insert(CustomerRequestDTO customer) {
@@ -30,7 +33,7 @@ public class CustomerServiceImpl implements ICustomerService {
         entity.setAddress(addressEntity);
         log.info(entity.getId());
         customerRepository.save(entity);
-        cpfValidationProducer.send(customer.getCpf());
+        applicationEventPublisher.publishEvent(new NotificationValidationDocumentMessage(customer.getCpf()));
     }
 
     @Override
