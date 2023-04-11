@@ -5,7 +5,6 @@ import com.br.exercicio.formalizacao.domain.dto.CustomerResponseDTO;
 import com.br.exercicio.formalizacao.domain.dto.ProdutoDTO;
 import com.br.exercicio.formalizacao.domain.entity.AddressEntity;
 import com.br.exercicio.formalizacao.domain.entity.CustomerEntity;
-import com.br.exercicio.formalizacao.domain.enums.TipoProdutoEnum;
 import com.br.exercicio.formalizacao.domain.mapper.AddressMapper;
 import com.br.exercicio.formalizacao.domain.mapper.CustomerMapper;
 import com.br.exercicio.formalizacao.domain.mapper.ProdutoMapper;
@@ -15,13 +14,11 @@ import com.br.exercicio.formalizacao.repository.CustomerRepository;
 import com.br.exercicio.formalizacao.service.ICustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -74,10 +71,9 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     private AddressEntity getAddress(String zipCode) {
-        AddressEntity address = addressClientRepository.find(zipCode)
+        return addressClientRepository.find(zipCode)
                 .map(AddressMapper.INSTANCE::to)
                 .orElseThrow(() -> new RuntimeException());
-        return address;
     }
 
 }
