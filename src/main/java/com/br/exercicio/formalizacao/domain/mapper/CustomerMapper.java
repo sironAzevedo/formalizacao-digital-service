@@ -15,7 +15,6 @@ import java.util.List;
 public interface CustomerMapper {
     CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class);
 
-    //@Mapping(target = "id", ignore = true)
     @Mapping(target = "address", ignore = true)
     @Mapping(target = "produtos", expression = "java(resolveProdutoEntities(customer.getProdutos()))")
     CustomerEntity toCustomerEntity(CustomerRequestDTO customer);
