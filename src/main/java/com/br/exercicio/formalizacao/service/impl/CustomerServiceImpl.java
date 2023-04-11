@@ -6,9 +6,7 @@ import com.br.exercicio.formalizacao.domain.entity.AddressEntity;
 import com.br.exercicio.formalizacao.domain.entity.CustomerEntity;
 import com.br.exercicio.formalizacao.domain.mapper.AddressMapper;
 import com.br.exercicio.formalizacao.domain.mapper.CustomerMapper;
-import com.br.exercicio.formalizacao.events.listener.NotificacaoNovaFormalizacaoListener;
-import com.br.exercicio.formalizacao.events.listener.message.NotificationValidationDocumentMessage;
-import com.br.exercicio.formalizacao.events.producer.SendCpfValidationProducer;
+import com.br.exercicio.formalizacao.events.listener.event.NotificacaoNovaFormalizacaoEvent;
 import com.br.exercicio.formalizacao.repository.AddressClientRepository;
 import com.br.exercicio.formalizacao.repository.CustomerRepository;
 import com.br.exercicio.formalizacao.service.ICustomerService;
@@ -33,7 +31,7 @@ public class CustomerServiceImpl implements ICustomerService {
         entity.setAddress(addressEntity);
         log.info(entity.getId());
         customerRepository.save(entity);
-        applicationEventPublisher.publishEvent(new NotificationValidationDocumentMessage(customer.getCpf()));
+        applicationEventPublisher.publishEvent(new NotificacaoNovaFormalizacaoEvent(customer.getCpf()));
     }
 
     @Override

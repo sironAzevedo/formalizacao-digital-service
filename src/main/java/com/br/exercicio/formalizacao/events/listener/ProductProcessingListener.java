@@ -1,8 +1,7 @@
 package com.br.exercicio.formalizacao.events.listener;
 
-import com.br.exercicio.formalizacao.domain.dto.CustomerResponseDTO;
-import com.br.exercicio.formalizacao.events.listener.message.NotificationProcessarProdutoMessage;
-import com.br.exercicio.formalizacao.events.listener.message.NotificationValidationDocumentMessage;
+import com.br.exercicio.formalizacao.domain.enums.StatusSolicitacaoEnum;
+import com.br.exercicio.formalizacao.events.listener.event.NotificationDocumentValidatedEvent;
 import com.br.exercicio.formalizacao.events.producer.SendCpfValidationProducer;
 import com.br.exercicio.formalizacao.service.ICustomerService;
 import lombok.RequiredArgsConstructor;
@@ -13,16 +12,17 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class NotificacaoUpdateStatusSolicitacaoProdutoListener {
-
+public class ProductProcessingListener {
     private final SendCpfValidationProducer cpfValidationProducer;
     private final ICustomerService customerService;
 
 
-    @EventListener(NotificationProcessarProdutoMessage.class)
-    public void processamentoProduto(NotificationProcessarProdutoMessage message) {
+    @EventListener(NotificationDocumentValidatedEvent.class)
+    public void processamentoProduto(NotificationDocumentValidatedEvent message) {
         message.getProdutos().forEach(p -> {
-            p.getTipoProduto();
+            if(StatusSolicitacaoEnum.SOLICITADO.equals(p.getStatusSolicitacao())){
+                p.getTipoProduto();
+            }
         });
 
 

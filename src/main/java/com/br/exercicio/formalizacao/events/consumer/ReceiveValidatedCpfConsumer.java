@@ -4,7 +4,7 @@ import com.br.exercicio.formalizacao.domain.dto.CustomerRequestDTO;
 import com.br.exercicio.formalizacao.domain.dto.CustomerResponseDTO;
 import com.br.exercicio.formalizacao.events.consumer.mapper.CustomerMessageMapper;
 import com.br.exercicio.formalizacao.events.consumer.message.CustomerConsumerMessage;
-import com.br.exercicio.formalizacao.events.listener.message.NotificationProcessarProdutoMessage;
+import com.br.exercicio.formalizacao.events.listener.event.NotificationDocumentValidatedEvent;
 import com.br.exercicio.formalizacao.service.ICustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +26,6 @@ public class ReceiveValidatedCpfConsumer {
         CustomerRequestDTO requestDTO = CustomerMessageMapper.INSTANCE.toCustomer(message);
         CustomerResponseDTO pessoa = customerService.findByCpf(message.getCpf());
         customerService.update(requestDTO, pessoa.getId());
-        applicationEventPublisher.publishEvent(new NotificationProcessarProdutoMessage(pessoa.getCpf(), pessoa.getProdutos()));
+        applicationEventPublisher.publishEvent(new NotificationDocumentValidatedEvent(pessoa.getCpf(), pessoa.getProdutos()));
     }
 }
