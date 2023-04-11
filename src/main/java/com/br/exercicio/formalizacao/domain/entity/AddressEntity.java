@@ -1,4 +1,4 @@
-package com.br.exercicio.formalizacao.adapters.outbound.repository.entity;
+package com.br.exercicio.formalizacao.domain.entity;
 
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;

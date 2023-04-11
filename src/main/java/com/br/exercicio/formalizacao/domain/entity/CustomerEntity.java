@@ -1,6 +1,5 @@
-package com.br.exercicio.formalizacao.adapters.outbound.repository.entity;
+package com.br.exercicio.formalizacao.domain.entity;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;

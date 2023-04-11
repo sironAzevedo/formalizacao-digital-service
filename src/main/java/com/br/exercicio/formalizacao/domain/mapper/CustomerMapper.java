@@ -1,7 +1,8 @@
-package com.br.exercicio.formalizacao.adapters.outbound.repository.mapper;
+package com.br.exercicio.formalizacao.domain.mapper;
 
+import com.br.exercicio.formalizacao.domain.dto.CustomerRequestDTO;
+import com.br.exercicio.formalizacao.domain.dto.CustomerResponseDTO;
 import com.br.exercicio.formalizacao.domain.entity.CustomerEntity;
-import com.br.exercicio.formalizacao.application.core.domain.Customer;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -10,10 +11,14 @@ import org.mapstruct.factory.Mappers;
 public interface CustomerMapper {
     CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class);
 
-    @Mapping(target="isValidCpf", expression = "java(customer.getIsValidCpf())")
-    CustomerEntity toCustomerEntity(Customer customer);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "address", ignore = true)
+    CustomerEntity toCustomerEntity(CustomerRequestDTO customer);
 
 
     @Mapping(target="isValidCpf", expression = "java(customerEntity.getIsValidCpf())")
-    Customer toCustomer(CustomerEntity customerEntity);
+    CustomerResponseDTO toCustomerResponse(CustomerEntity customerEntity);
+
+    @Mapping(target="isValidCpf", expression = "java(customerEntity.getIsValidCpf())")
+    CustomerEntity toCustomerEntity(CustomerResponseDTO customerEntity);
 }

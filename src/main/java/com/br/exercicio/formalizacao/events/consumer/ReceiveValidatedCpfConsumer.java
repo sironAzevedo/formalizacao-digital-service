@@ -1,9 +1,10 @@
-package com.br.exercicio.formalizacao.adapters.inbound.consumer;
+package com.br.exercicio.formalizacao.events.consumer;
 
-import com.br.exercicio.formalizacao.adapters.inbound.consumer.mapper.CustomerMessageMapper;
-import com.br.exercicio.formalizacao.adapters.inbound.consumer.message.CustomerMessage;
-import com.br.exercicio.formalizacao.application.core.domain.Customer;
-import com.br.exercicio.formalizacao.application.ports.inbound.CustomerInputPort;
+import com.br.exercicio.formalizacao.domain.dto.CustomerRequestDTO;
+import com.br.exercicio.formalizacao.domain.dto.CustomerResponseDTO;
+import com.br.exercicio.formalizacao.events.consumer.mapper.CustomerMessageMapper;
+import com.br.exercicio.formalizacao.events.consumer.message.CustomerConsumerMessage;
+import com.br.exercicio.formalizacao.service.ICustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +13,18 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class ReceiveValidatedCpfConsumer {
 
     @Autowired
-    private CustomerInputPort customerInputPort;
+    private final ICustomerService iCustomerService;
+
 
     @KafkaListener(topics = "tp-cpf-validated", groupId = "formalizacao", containerFactory = "kafkaListenerContainerFactory")
-    //@KafkaListener(topics = "${kafka.topic.cpf-validated}", groupId = "${kafka.topic.grupo-id}", containerFactory = "kafkaListenerContainerFactory")
-    public void receive(CustomerMessage message) {
-        log.info(String.format("Consuming netflix_movie, movie: %s", message.toString()));
-        Customer customer = CustomerMessageMapper.INSTANCE.toCustomer(message);
-        customerInputPort.update(customer, message.getZipCode());
+    public void receive(CustomerConsumerMessage message) {
+        log.info(String.format("Consuming message tp-cpf-validated, message: %s", message.toString()));
+        CustomerRequestDTO requestDTO = CustomerMessageMapper.INSTANCE.toCustomer(message);
+        CustomerResponseDTO pessoa = iCustomerService.findByCpf(message.getCpf());
+        iCustomerService.update(requestDTO, pessoa.getId());
     }
 }

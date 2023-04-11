@@ -1,11 +1,9 @@
-package com.br.exercicio.formalizacao.domain.entity;
+package com.br.exercicio.formalizacao.domain.dto;
 
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document(collection = "address")
-public class AddressEntity {
+public class AddressResponseDTO {
 
     private String zipCode;
     private String street;

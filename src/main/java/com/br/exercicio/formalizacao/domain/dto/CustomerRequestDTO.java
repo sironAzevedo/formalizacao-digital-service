@@ -1,19 +1,20 @@
-package com.br.exercicio.formalizacao.adapters.inbound.controller.request;
+package com.br.exercicio.formalizacao.domain.dto;
 
 import lombok.Data;
-import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class CustomerRequest {
+public class CustomerRequestDTO {
 
     @NotBlank
-    private String name;
+    private String nome;
 
     @NotBlank
     private String cpf;
 
     @NotBlank
     private String zipCode;
+
+    private Boolean isValidCpf = Boolean.FALSE;
 }

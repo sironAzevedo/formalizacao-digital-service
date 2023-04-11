@@ -1,12 +1,12 @@
-package com.br.exercicio.formalizacao.adapters.inbound.controller.response;
+package com.br.exercicio.formalizacao.domain.dto;
 
 import lombok.Data;
 
 @Data
-public class CustomerResponse {
-
+public class CustomerResponseDTO {
+    private String id;
     private String nome;
     private String cpf;
-    private AddressResponse address;
+    private AddressResponseDTO address;
     private Boolean isValidCpf;
 }

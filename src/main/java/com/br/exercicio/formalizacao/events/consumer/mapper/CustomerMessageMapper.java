@@ -1,6 +1,6 @@
-package com.br.exercicio.formalizacao.domain.mapper;
+package com.br.exercicio.formalizacao.events.consumer.mapper;
 
-import com.br.exercicio.formalizacao.domain.dto.CustomerConsumerMessage;
+import com.br.exercicio.formalizacao.events.consumer.message.CustomerConsumerMessage;
 import com.br.exercicio.formalizacao.domain.dto.CustomerRequestDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -11,7 +11,7 @@ public interface CustomerMessageMapper {
 
    CustomerMessageMapper INSTANCE = Mappers.getMapper(CustomerMessageMapper.class);
 
-    @Mapping(target = "address", ignore = true)
+    @Mapping(target = "zipCode", ignore = true)
     CustomerRequestDTO toCustomer(CustomerConsumerMessage consumerMessage);
 
 }

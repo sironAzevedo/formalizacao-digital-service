@@ -1,4 +1,4 @@
-package com.br.exercicio.formalizacao.infrastructure.messageBroker.deserializer;
+package com.br.exercicio.formalizacao.config.messageBroker.deserializer;
 
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 

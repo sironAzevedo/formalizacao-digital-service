@@ -1,4 +1,4 @@
-package com.br.exercicio.formalizacao.domain.dto;
+package com.br.exercicio.formalizacao.events.consumer.message;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerConsumerMessage {
-    private String name;
+    private String nome;
     private String cpf;
     private Boolean isValidCpf;
 }

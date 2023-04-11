@@ -1,5 +1,5 @@
 {
-  "cep": "{{request.path.[1]}}",
+  "zipCode": "{{request.path.[1]}}",
   "street": "Rua formalizao",
   "city": "São Paulo",
   "state": "São Paulo"

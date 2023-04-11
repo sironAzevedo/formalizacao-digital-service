@@ -1,7 +1,7 @@
-package com.br.exercicio.formalizacao.adapters.outbound.client.mapper;
+package com.br.exercicio.formalizacao.domain.mapper;
 
 import com.br.exercicio.formalizacao.domain.entity.AddressClientResponseEntity;
-import com.br.exercicio.formalizacao.application.core.domain.Address;
+import com.br.exercicio.formalizacao.domain.entity.AddressEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -9,5 +9,5 @@ import org.mapstruct.factory.Mappers;
 public interface AddressMapper {
     AddressMapper INSTANCE = Mappers.getMapper(AddressMapper.class);
 
-    Address to(AddressClientResponseEntity addressClientResponseEntity);
+    AddressEntity to(AddressClientResponseEntity addressClientResponseEntity);
 }

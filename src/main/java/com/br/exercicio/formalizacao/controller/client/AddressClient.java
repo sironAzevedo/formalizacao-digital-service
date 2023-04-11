@@ -1,4 +1,4 @@
-package com.br.exercicio.formalizacao.adapters.outbound.client;
+package com.br.exercicio.formalizacao.controller.client;
 
 import com.br.exercicio.formalizacao.domain.entity.AddressClientResponseEntity;
 import org.springframework.cloud.openfeign.FeignClient;

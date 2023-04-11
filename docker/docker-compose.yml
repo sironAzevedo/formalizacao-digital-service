@@ -24,6 +24,24 @@ services:
     networks:
       - formalizao-digital
 
+  kafka-manager:
+    container_name: kafka-manager
+    image: hlebalbau/kafka-manager:3.0.0.5
+    restart: unless-stopped
+    depends_on:
+      - zookeeper
+    networks:
+      - formalizao-digital
+    ports:
+      - "9000:9000"
+    environment:
+      ZK_HOSTS: zookeeper:2181
+      APPLICATION_SECRET: "random-secret"
+    command: -Dpidfile.path=/dev/null
+    healthcheck:
+      test: "curl -f http://localhost:9000 || exit 1"
+      #start_period: 30s
+
   mongo:
     image: mongo
     container_name: mongo-test

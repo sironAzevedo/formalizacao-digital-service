@@ -1,9 +1,9 @@
-package com.br.exercicio.formalizacao.adapters.outbound.client.response;
+package com.br.exercicio.formalizacao.domain.entity;
 
 import lombok.Data;
 
 @Data
-public class AddressClientResponse {
+public class AddressClientResponseEntity {
 
     private String zipCode;
     private String street;

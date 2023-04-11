@@ -1,10 +1,8 @@
-package com.br.exercicio.formalizacao.adapters.inbound.controller;
+package com.br.exercicio.formalizacao.controller;
 
-import com.br.exercicio.formalizacao.adapters.inbound.controller.mapper.CustomerRequestResponseMapper;
-import com.br.exercicio.formalizacao.adapters.inbound.controller.request.CustomerRequest;
-import com.br.exercicio.formalizacao.adapters.inbound.controller.response.CustomerResponse;
-import com.br.exercicio.formalizacao.application.core.domain.Customer;
-import com.br.exercicio.formalizacao.application.ports.inbound.CustomerInputPort;
+import com.br.exercicio.formalizacao.domain.dto.CustomerRequestDTO;
+import com.br.exercicio.formalizacao.domain.dto.CustomerResponseDTO;
+import com.br.exercicio.formalizacao.service.ICustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -30,7 +28,7 @@ import javax.validation.Valid;
 @RequestMapping(value = "/v1/customers")
 public class CustomerController {
 
-    private final CustomerInputPort input;
+    private final ICustomerService service;
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
@@ -43,10 +41,9 @@ public class CustomerController {
             @ApiResponse(responseCode = "400", description = "Erro de validação de campo"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
-    public void inserir(@Valid @RequestBody CustomerRequest request) {
+    public void inserir(@Valid @RequestBody CustomerRequestDTO request) {
         log.info("INICIO - [inserir pessoas: {}]", request.getCpf());
-        Customer customer = CustomerRequestResponseMapper.INSTANCE.toCustomer(request);
-        input.insert(customer, request.getZipCode());
+        service.insert(request);
         log.info("FIM - [inserir pessoas: {}]", request.getCpf());
     }
 
@@ -62,11 +59,11 @@ public class CustomerController {
             @ApiResponse(responseCode = "204", description = "Pessoa não encontrada"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
-    public CustomerResponse findById(@PathVariable(name = "id") String codigo) {
+    public CustomerResponseDTO findById(@PathVariable(name = "id") String codigo) {
         log.info("INICIO - [consultarPessoaPorId: {}]", codigo);
-        Customer customer = input.find(codigo);;
+        CustomerResponseDTO customer = service.find(codigo);
         log.info("FIM - [consultarPessoaPorId: {}]", codigo);
-        return CustomerRequestResponseMapper.INSTANCE.toCustomerResponse(customer);
+        return customer;
     }
 
     @PutMapping("/{id}")
@@ -81,11 +78,9 @@ public class CustomerController {
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
     public void update(@PathVariable(name = "id") String codigo,
-                       @Valid @RequestBody CustomerRequest request) {
+                       @Valid @RequestBody CustomerRequestDTO request) {
         log.info("INICIO - [atualizar pessoas: {}]", request.getCpf());
-        Customer customer = CustomerRequestResponseMapper.INSTANCE.toCustomer(request);
-        customer.setId(codigo);
-        input.update(customer, request.getZipCode());
+        service.update(request, codigo);
         log.info("FIM - [atualizar pessoas: {}]", request.getCpf());
     }
 
@@ -102,7 +97,7 @@ public class CustomerController {
     })
     public void delete(@PathVariable(name = "id") String codigo) {
         log.info("INICIO - [deletar pessoa: {}]", codigo);
-        input.delete(codigo);
+        service.delete(codigo);
         log.info("FIM - [deletar pessoa: {}]", codigo);
     }
 }

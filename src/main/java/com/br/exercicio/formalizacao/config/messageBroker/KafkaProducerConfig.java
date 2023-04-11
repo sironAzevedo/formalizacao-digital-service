@@ -1,4 +1,4 @@
-package com.br.exercicio.formalizacao.infrastructure.messageBroker;
+package com.br.exercicio.formalizacao.config.messageBroker;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;

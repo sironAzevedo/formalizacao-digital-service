@@ -1,5 +1,6 @@
-package com.br.exercicio.formalizacao.adapters.outbound;
+package com.br.exercicio.formalizacao.events.producer;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,14 +9,14 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-//@RequiredArgsConstructor
-public class SendCpfValidationAdapter {
+@RequiredArgsConstructor
+public class SendCpfValidationProducer {
 
     @Value(value = "${kafka.topic.cpf-validation}")
     private String topic;
 
-    @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
+    //@Autowired
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     //@Override
     public void send(String cpf) {
