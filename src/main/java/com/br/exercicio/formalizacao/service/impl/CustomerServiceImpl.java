@@ -4,8 +4,10 @@ import com.br.exercicio.formalizacao.domain.dto.CustomerRequestDTO;
 import com.br.exercicio.formalizacao.domain.dto.CustomerResponseDTO;
 import com.br.exercicio.formalizacao.domain.entity.AddressEntity;
 import com.br.exercicio.formalizacao.domain.entity.CustomerEntity;
+import com.br.exercicio.formalizacao.domain.entity.ProdutoEntity;
 import com.br.exercicio.formalizacao.domain.mapper.AddressMapper;
 import com.br.exercicio.formalizacao.domain.mapper.CustomerMapper;
+import com.br.exercicio.formalizacao.domain.mapper.ProdutoMapper;
 import com.br.exercicio.formalizacao.events.listener.event.NotificacaoNovaFormalizacaoEvent;
 import com.br.exercicio.formalizacao.repository.AddressClientRepository;
 import com.br.exercicio.formalizacao.repository.CustomerRepository;
@@ -14,6 +16,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -51,10 +58,9 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public void update(CustomerRequestDTO customer, String id) {
         CustomerResponseDTO pessoa = this.find(id);
-        AddressEntity address = getAddress(customer.getZipCode());
         CustomerEntity customerEntity = CustomerMapper.INSTANCE.toCustomerEntity(customer);
         customerEntity.setId(pessoa.getId());
-        customerEntity.setAddress(address);
+        customerEntity.setAddress(getAddress(customer.getZipCode()));
         customerRepository.save(customerEntity);
     }
 
@@ -70,4 +76,5 @@ public class CustomerServiceImpl implements ICustomerService {
                 .orElseThrow(() -> new RuntimeException());
         return address;
     }
+
 }

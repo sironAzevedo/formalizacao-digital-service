@@ -26,4 +26,6 @@ kafka:
       reset: earliest
     cpf-validated: tp-cpf-validated
     cpf-validation: tp-cpf-validation
+    card-processing: tp-card-processing
+    card-processed: tp-card-processed
 

@@ -25,6 +25,7 @@ public class ReceiveValidatedCpfConsumer {
         log.info(String.format("Consuming message tp-cpf-validated, message: %s", message.toString()));
         CustomerRequestDTO requestDTO = CustomerMessageMapper.INSTANCE.toCustomer(message);
         CustomerResponseDTO pessoa = customerService.findByCpf(message.getCpf());
+        requestDTO.setProdutos(pessoa.getProdutos());
         customerService.update(requestDTO, pessoa.getId());
         applicationEventPublisher.publishEvent(new NotificationDocumentValidatedEvent(pessoa.getCpf(), pessoa.getProdutos()));
     }

@@ -1,7 +1,9 @@
 package com.br.exercicio.formalizacao.config.messageBroker;
 
+import com.br.exercicio.formalizacao.events.producer.message.ProductCardProcessingMessage;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,15 +23,32 @@ public class KafkaProducerConfig {
 
     @Bean
     public ProducerFactory<String, String> producerFactory() {
-        Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
-        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        Map<String, Object> configProps = getStringObjectMap();
+        return new DefaultKafkaProducerFactory<>(configProps);
+    }
+
+    @Bean("producerProductCardProcessingFactory")
+    public ProducerFactory<String, ProductCardProcessingMessage> producerProductCardProcessingFactory() {
+        Map<String, Object> configProps = getStringObjectMap();
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
+    }
+
+    @Bean("producerProductCardProcessing")
+    public KafkaTemplate<String, ProductCardProcessingMessage> producerProductCardProcessingTemplate() {
+        return new KafkaTemplate<>(producerProductCardProcessingFactory());
+    }
+
+    @NotNull
+    private Map<String, Object> getStringObjectMap() {
+        Map<String, Object> configProps = new HashMap<>();
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        return configProps;
     }
 }
