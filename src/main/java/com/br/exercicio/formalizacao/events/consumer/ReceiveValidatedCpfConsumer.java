@@ -20,7 +20,7 @@ public class ReceiveValidatedCpfConsumer {
     private final ICustomerService customerService;
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    @KafkaListener(topics = "tp-cpf-validated", groupId = "formalizacao", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(topics = "${kafka.topic.cpf-validated}", groupId = "${kafka.grupo-id}", containerFactory = "kafkaListenerContainerFactory")
     public void receive(CustomerConsumerMessage message) {
         log.info(String.format("Consuming message tp-cpf-validated, message: %s", message.toString()));
         CustomerRequestDTO requestDTO = CustomerMessageMapper.INSTANCE.toCustomer(message);
