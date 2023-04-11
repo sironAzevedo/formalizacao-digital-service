@@ -11,9 +11,10 @@ import com.br.exercicio.formalizacao.repository.AddressClientRepository;
 import com.br.exercicio.formalizacao.repository.CustomerRepository;
 import com.br.exercicio.formalizacao.service.ICustomerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements ICustomerService {
@@ -27,6 +28,7 @@ public class CustomerServiceImpl implements ICustomerService {
         AddressEntity addressEntity = getAddress(customer.getZipCode());
         var entity = CustomerMapper.INSTANCE.toCustomerEntity(customer);
         entity.setAddress(addressEntity);
+        log.info(entity.getId());
         customerRepository.save(entity);
         cpfValidationProducer.send(customer.getCpf());
     }
@@ -53,7 +55,6 @@ public class CustomerServiceImpl implements ICustomerService {
         customerEntity.setId(pessoa.getId());
         customerEntity.setAddress(address);
         customerRepository.save(customerEntity);
-
     }
 
     @Override

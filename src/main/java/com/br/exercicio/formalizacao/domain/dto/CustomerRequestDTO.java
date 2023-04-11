@@ -2,7 +2,9 @@ package com.br.exercicio.formalizacao.domain.dto;
 
 import lombok.Data;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 public class CustomerRequestDTO {
@@ -17,4 +19,7 @@ public class CustomerRequestDTO {
     private String zipCode;
 
     private Boolean isValidCpf = Boolean.FALSE;
+
+    @Valid
+    private List<ProdutoDTO> produtos;
 }

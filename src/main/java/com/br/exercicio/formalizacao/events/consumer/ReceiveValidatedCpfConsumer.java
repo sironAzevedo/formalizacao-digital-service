@@ -19,7 +19,6 @@ public class ReceiveValidatedCpfConsumer {
     @Autowired
     private final ICustomerService iCustomerService;
 
-
     @KafkaListener(topics = "tp-cpf-validated", groupId = "formalizacao", containerFactory = "kafkaListenerContainerFactory")
     public void receive(CustomerConsumerMessage message) {
         log.info(String.format("Consuming message tp-cpf-validated, message: %s", message.toString()));
