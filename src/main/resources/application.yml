@@ -4,7 +4,11 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://root:example@localhost:27017
+      host: localhost
+      port: 27017
+      authentication-database: admin
+      username: root
+      password: example
       database: formalizacao
 
 
@@ -13,4 +17,11 @@ api:
     address:
       url: http://localhost:9999/address
 
-
+kafka:
+  bootstrapAddress: localhost:9092
+  grupo-id: formalizacao
+  topic:
+    offset:
+      reset: earliest
+    cpf-validated: tp-cpf-validated
+    cpf-validation: tp-cpf-validation

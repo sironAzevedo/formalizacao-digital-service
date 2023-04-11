@@ -20,7 +20,12 @@ public class KafkaConsumerConfig {
 
     @Value(value = "${kafka.bootstrapAddress}")
     private String bootstrapAddress;
-    private static final String GROUP_ID = "formalizacao";
+
+    @Value(value = "${kafka.grupo-id}")
+    private String grupo_id;
+
+    @Value(value = "${kafka.topic.offset.reset}")
+    private String offset_reset;
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, CustomerMessage> kafkaListenerContainerFactory() {
@@ -32,10 +37,10 @@ public class KafkaConsumerConfig {
     public ConsumerFactory<String, CustomerMessage> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, grupo_id);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, offset_reset);
         return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new CustomJsonDeserializer<>(CustomerMessage.class));
     }
 }
