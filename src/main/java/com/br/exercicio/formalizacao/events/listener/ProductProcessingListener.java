@@ -14,12 +14,11 @@ import org.springframework.stereotype.Component;
 public class ProductProcessingListener {
     private final ProdutoStrategyFactory produtoStrategyFactory;
 
-
     @EventListener(NotificationDocumentValidatedEvent.class)
     public void processamentoProduto(NotificationDocumentValidatedEvent message) {
         message.getProdutos().forEach(p -> {
             if(StatusSolicitacaoEnum.SOLICITADO.equals(p.getStatusSolicitacao())) {
-                produtoStrategyFactory.execute(p.getTipoProduto(), message.getCpf());
+                produtoStrategyFactory.execute(p.getTipoProduto(), message.getCpf(), StatusSolicitacaoEnum.EM_PROCESSAMENTO);
             }
         });
     }

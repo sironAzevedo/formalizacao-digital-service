@@ -9,9 +9,7 @@ public interface ICustomerService {
 
     CustomerResponseDTO find(String id);
 
-    CustomerResponseDTO findByCpf(String id);
-
-    void update(CustomerRequestDTO customer, String id);
+    void update(CustomerRequestDTO customer, String cpf);
 
     void delete(String id);
 }

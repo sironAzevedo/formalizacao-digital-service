@@ -13,9 +13,8 @@ import java.util.List;
 public class CustomerEntity {
 
     @Id
-    private String id;
-    private String nome;
     private String cpf;
+    private String nome;
     private AddressEntity address;
     private List<ProdutoEntity> produtos;
     private Boolean isValidCpf;

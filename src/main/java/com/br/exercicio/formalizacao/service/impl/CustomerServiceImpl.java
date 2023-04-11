@@ -35,31 +35,22 @@ public class CustomerServiceImpl implements ICustomerService {
     public void insert(CustomerRequestDTO customer) {
         AddressEntity addressEntity = getAddress(customer.getZipCode());
         var entity = CustomerMapper.INSTANCE.toCustomerEntity(customer);
-        entity.setAddress(addressEntity);
-        log.info(entity.getId());
+        entity.setAddress(addressEntity);;
         customerRepository.save(entity);
         applicationEventPublisher.publishEvent(new NotificacaoNovaFormalizacaoEvent(customer.getCpf()));
     }
 
     @Override
-    public CustomerResponseDTO find(String id) {
-        return customerRepository.findById(id)
+    public CustomerResponseDTO find(String cpf) {
+        return customerRepository.findById(cpf)
                 .map(CustomerMapper.INSTANCE::toCustomerResponse)
                 .orElseThrow(() -> new RuntimeException());
     }
 
     @Override
-    public CustomerResponseDTO findByCpf(String cpf) {
-        return customerRepository.findByCpf(cpf)
-                .map(CustomerMapper.INSTANCE::toCustomerResponse)
-                .orElseThrow(() -> new RuntimeException());
-    }
-
-    @Override
-    public void update(CustomerRequestDTO customer, String id) {
-        CustomerResponseDTO pessoa = this.find(id);
+    public void update(CustomerRequestDTO customer, String cpf) {
+        CustomerResponseDTO pessoa = this.find(cpf);
         CustomerEntity customerEntity = CustomerMapper.INSTANCE.toCustomerEntity(customer);
-        customerEntity.setId(pessoa.getId());
         customerEntity.setAddress(getAddress(customer.getZipCode()));
         customerRepository.save(customerEntity);
     }
@@ -67,7 +58,7 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public void delete(String id) {
         var pessoa = this.find(id);
-        customerRepository.deleteById(pessoa.getId());
+        customerRepository.deleteById(pessoa.getCpf());
     }
 
     private AddressEntity getAddress(String zipCode) {

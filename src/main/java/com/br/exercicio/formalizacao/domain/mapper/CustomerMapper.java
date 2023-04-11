@@ -5,8 +5,6 @@ import com.br.exercicio.formalizacao.domain.dto.CustomerResponseDTO;
 import com.br.exercicio.formalizacao.domain.dto.ProdutoDTO;
 import com.br.exercicio.formalizacao.domain.entity.CustomerEntity;
 import com.br.exercicio.formalizacao.domain.entity.ProdutoEntity;
-import com.br.exercicio.formalizacao.domain.enums.StatusSolicitacaoEnum;
-import com.br.exercicio.formalizacao.domain.enums.TipoProdutoEnum;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -17,7 +15,7 @@ import java.util.List;
 public interface CustomerMapper {
     CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class);
 
-    @Mapping(target = "id", ignore = true)
+    //@Mapping(target = "id", ignore = true)
     @Mapping(target = "address", ignore = true)
     @Mapping(target = "produtos", expression = "java(resolveProdutoEntities(customer.getProdutos()))")
     CustomerEntity toCustomerEntity(CustomerRequestDTO customer);

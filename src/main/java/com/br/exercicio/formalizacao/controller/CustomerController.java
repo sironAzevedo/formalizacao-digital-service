@@ -59,10 +59,10 @@ public class CustomerController {
             @ApiResponse(responseCode = "204", description = "Pessoa não encontrada"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
-    public CustomerResponseDTO findById(@PathVariable(name = "id") String codigo) {
-        log.info("INICIO - [consultarPessoaPorId: {}]", codigo);
-        CustomerResponseDTO customer = service.find(codigo);
-        log.info("FIM - [consultarPessoaPorId: {}]", codigo);
+    public CustomerResponseDTO findById(@PathVariable(name = "id") String cpf) {
+        log.info("INICIO - [consultarPessoaPorId: {}]", cpf);
+        CustomerResponseDTO customer = service.find(cpf);
+        log.info("FIM - [consultarPessoaPorId: {}]", cpf);
         return customer;
     }
 
@@ -77,10 +77,10 @@ public class CustomerController {
             @ApiResponse(responseCode = "400", description = "Erro de validação de campo"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
-    public void update(@PathVariable(name = "id") String codigo,
+    public void update(@PathVariable(name = "id") String cpf,
                        @Valid @RequestBody CustomerRequestDTO request) {
         log.info("INICIO - [atualizar pessoas: {}]", request.getCpf());
-        service.update(request, codigo);
+        service.update(request, cpf);
         log.info("FIM - [atualizar pessoas: {}]", request.getCpf());
     }
 

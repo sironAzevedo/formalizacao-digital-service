@@ -1,5 +1,6 @@
 package com.br.exercicio.formalizacao.domain.strategy.facotory;
 
+import com.br.exercicio.formalizacao.domain.enums.StatusSolicitacaoEnum;
 import com.br.exercicio.formalizacao.domain.enums.TipoProdutoEnum;
 import com.br.exercicio.formalizacao.domain.strategy.TipoProdutoStrategy;
 import com.br.exercicio.formalizacao.service.IProcessProductStrategyService;
@@ -22,9 +23,9 @@ public class ProdutoStrategyFactory {
         createStrategy(strategySet);
     }
 
-    public void execute(TipoProdutoEnum tipoProdutoEnum, String cpf) {
+    public void execute(TipoProdutoEnum tipoProdutoEnum, String cpf, StatusSolicitacaoEnum statusSolicitacaoEnum) {
         try {
-            this.strategies.get(tipoProdutoEnum).process(cpf);
+            this.strategies.get(tipoProdutoEnum).process(cpf, statusSolicitacaoEnum);
         } catch (Exception e) {
             log.warn("Classe para processamento do produto {} não foi encontrada", tipoProdutoEnum);
         }
